@@ -1,0 +1,50 @@
+# The name of your workflow. GitHub displays the names of your workflows on your repository's "Actions" tab
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    # Unique identifier of our job (`job_id`)
+    test:
+      # Sets the name `Test` for the job, which is displayed in the GitHub UI
+      name: Test
+      # Containers must run in Linux based operating systems
+      runs-on: ubuntu-latest
+      steps:
+        # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+        # This GitHub Action installs a Rust toolchain using rustup. It is designed for one-line concise usage and good defaults.
+      - name: Install the Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+        # This GitHub Action caches the Rust toolchain between workflow runs. It is designed for one-line concise usage and good defaults.
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Run tests
+        run: cargo test
+
+    fmt:
+        name: Rustfmt
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: dtolnay/rust-toolchain@stable
+            with:
+              components: rustfmt
+          - name: Enforce formatting
+            run: cargo fmt --check
+
+    # `clippy` container job
+    clippy:
+        name: Clippy
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - uses: dtolnay/rust-toolchain@stable
+            with:
+                components: clippy
+          - name: Linting
+            run: cargo clippy -- -D warnings
+             

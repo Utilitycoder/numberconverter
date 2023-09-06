@@ -17,7 +17,6 @@ pub fn convert(
     number_str: &str,
     base_convert_from: &str,
 ) -> Result<(), std::num::ParseIntError> {
-
     let convert_from = get_base_value(base_convert_from);
 
     let convert_to = get_base_value(base_convert_to);
