@@ -24,19 +24,19 @@ pub fn convert(
     match base_convert_to {
         "binary" => {
             let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
-            println!("Binary: {}", number);
+            println!("Binary: {}", number.val);
         }
         "hex" => {
             let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
-            println!("Hexadecimal: 0x{}", number);
+            println!("Hexadecimal: 0x{}", number.val);
         }
         "octal" => {
             let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
-            println!("Octal: {}", number);
+            println!("Octal: {}", number.val);
         }
         "decimal" => {
             let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
-            println!("Decimal: {}", number);
+            println!("Decimal: {}", number.val);
         }
         _ => {
             println!("Unsupported base: {}", base_convert_to);
@@ -44,4 +44,63 @@ pub fn convert(
     }
 
     Ok(())
+}
+
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_convert_binary_to_decimal() {
+        convert("decimal", "10", "binary").unwrap();
+    }
+
+    #[test]
+    fn test_convert_binary_to_hex() {
+        convert("hex", "1010", "binary").unwrap();
+    }
+
+    #[test]
+    fn test_convert_binary_to_octal() {
+        convert("octal", "1010", "binary").unwrap();
+    }
+
+    #[test]
+    fn test_convert_hex_to_decimal() {
+        convert("decimal", "10", "hex").unwrap();
+    }
+
+    #[test]
+    fn test_convert_hex_to_binary() {
+        convert("binary", "1a", "hex").unwrap();
+    }
+
+    #[test]
+    fn test_convert_hex_to_octal() {
+        convert("octal", "1a", "hex").unwrap();
+    }
+
+    #[test]
+    fn test_convert_octal_to_decimal() {
+        convert("decimal", "12", "octal").unwrap();
+    }
+
+    #[test]
+    fn test_convert_octal_to_binary() {
+        convert("binary", "12", "octal").unwrap();
+    }
+
+    #[test]
+    fn test_convert_octal_to_hex() {
+        convert("hex", "12", "octal").unwrap();
+    }
+
+    #[test]
+    fn test_convert_decimal_to_binary() {
+        convert("binary", "10", "decimal").unwrap();
+    }
+
+    #[test]
+    fn test_convert_decimal_to_hex() {
+        convert("hex", "10", "decimal").unwrap();
+    }
 }
