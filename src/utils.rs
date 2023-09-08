@@ -18,24 +18,21 @@ pub fn convert(
     base_convert_from: &str,
 ) -> Result<(), std::num::ParseIntError> {
     let convert_from = get_base_value(base_convert_from);
-
     let convert_to = get_base_value(base_convert_to);
+
+    let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
 
     match base_convert_to {
         "binary" => {
-            let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
             println!("Binary: {}", number.val);
         }
         "hex" => {
-            let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
             println!("Hexadecimal: 0x{}", number.val);
         }
         "octal" => {
-            let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
             println!("Octal: {}", number.val);
         }
         "decimal" => {
-            let number = Based::new(number_str, convert_from).to(convert_to).unwrap();
             println!("Decimal: {}", number.val);
         }
         _ => {
