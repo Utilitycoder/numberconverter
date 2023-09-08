@@ -40,19 +40,31 @@ Once Rust and Cargo are installed, follow these steps to get started:
 
 ## Usage
 
-The Number Converter CLI accepts two command-line arguments:
+The Number Converter CLI accepts four command-line arguments:
 
-1. `base_to_convert_to`: The type of base to which you want to convert the number. Supported options are `binary`, `hex`, `decimal` and `octal`.
+1. `convert`: This subcommand is required to tell clap the command we want to run.
 
-2. `base_to_convert_from`: The base of the number you want to convert. Supported options are `binary`, `decimal`, `hex`, and `octal`.
+2. `base_to_convert_to`: The type of base to which you want to convert the number. Supported options are `binary`, `hex`, `decimal` and `octal`.
 
-3. `number_to_convert`: The number you want to convert.
+3. `base_to_convert_from`: The base of the number you want to convert. Supported options are `binary`, `decimal`, `hex`, and `octal`.
+
+4. `number_to_convert`: The number you want to convert.
 
 To run the CLI, use the following command format:
 
 ```bash
-cargo run <base_to_convert_to> <base_to_convert_from> <number_to_convert>
+cargo run <convert> <base_to_convert_to> <base_to_convert_from> <number_to_convert>
 ```
+
+To run the CLI in interactive mode, simply run:
+
+```bash
+cargo run
+```
+
+You should then type `-- <convert> <base_to_convert_to> <base_to_convert_from> <number_to_convert>`
+
+For example, type: `convert decimal binary 1111110111`
 
 ## Contributing
 
