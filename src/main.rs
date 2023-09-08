@@ -13,7 +13,7 @@ use numberconverter::utils::convert;
 /// If the conversion is successful, the result is printed to the console.
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let matches = App::new("Number Converter")
-        .version("1.0")        
+        .version("1.0")
         .author("Utilitycoder")
         .about("Converts numbers between different bases")
         .subcommand(
