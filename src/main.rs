@@ -1,5 +1,5 @@
-use std::io::{self, Write};
 use clap::{App, Arg, SubCommand};
+use std::io::{self, Write};
 
 use numberconverter::utils::convert;
 
@@ -51,7 +51,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             io::stdout().flush()?; // Flush stdout to display the prompt before read_line
             io::stdin().read_line(&mut input)?;
 
-            let matches = app.clone().get_matches_from_safe_borrow(input.split_whitespace());
+            let matches = app
+                .clone()
+                .get_matches_from_safe_borrow(input.split_whitespace());
 
             match matches {
                 Ok(matches) => {

@@ -1,5 +1,5 @@
-use num_base::Based;
 use colored::*;
+use num_base::Based;
 
 // This function returns the base value for a given string representation of the base.
 // If the base is not supported, it returns an error.
@@ -39,13 +39,19 @@ pub fn convert(
             println!("{}", format!("Binary: {}", number.val).to_string().green());
         }
         "hex" => {
-            println!("{}", format!("Hexadecimal: 0x{}", number.val).to_string().red());
+            println!(
+                "{}",
+                format!("Hexadecimal: 0x{}", number.val).to_string().red()
+            );
         }
         "octal" => {
-            println!("{}",format!("Octal: {}", number.val).to_string().blue());
+            println!("{}", format!("Octal: {}", number.val).to_string().blue());
         }
         "decimal" => {
-            println!("{}",format!("Decimal: {}", number.val).to_string().yellow());
+            println!(
+                "{}",
+                format!("Decimal: {}", number.val).to_string().yellow()
+            );
         }
         _ => {
             println!("Unsupported base: {}", base_convert_to);
