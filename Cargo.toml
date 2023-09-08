@@ -1,6 +1,6 @@
 [package]
 name = "numberconverter"
-author = "Utilitycoder"
+author = ["Utilitycoder"]
 version = "0.1.0"
 edition = "2021"
 
@@ -9,3 +9,4 @@ edition = "2021"
 [dependencies]
 clap = "2"
 num_base = "0.4.2"
+colored = "2.0"
