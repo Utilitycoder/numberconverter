@@ -1,0 +1,3 @@
+{"from_base":"hex","to_base":"binary","original_number":"200","converted_number":"1000000000"}
+{"from_base":"hex","to_base":"decimal","original_number":"500","converted_number":"1280"}
+{"from_base":"decimal","to_base":"binary","original_number":"400","converted_number":"110010000"}

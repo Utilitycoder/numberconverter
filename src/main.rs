@@ -1,7 +1,7 @@
 use clap::{App, Arg, SubCommand};
 use std::io::{self, Write};
 
-use numberconverter::utils::convert;
+use numberconverter::utils::{convert, load_conversion_history};
 
 /// This is the main function for the number converter program.
 /// It uses the clap library to handle command line arguments and subcommands.
@@ -34,7 +34,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .help("The number you want to convert")
                         .required(true),
                 ),
-        );
+        )
+        .subcommand(SubCommand::with_name("history").about("Displays the conversion history"));
 
     let matches = app.clone().get_matches();
 
@@ -44,6 +45,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let number_str = matches.value_of("number_to_convert").unwrap();
 
         convert(base_convert_to, number_str, base_convert_from)?;
+    } else if matches.subcommand_matches("history").is_some() {
+        load_conversion_history()?;
     } else {
         loop {
             let mut input = String::new();

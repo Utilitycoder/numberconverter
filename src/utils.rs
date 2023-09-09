@@ -1,5 +1,10 @@
 use colored::*;
 use num_base::Based;
+use serde::{Deserialize, Serialize};
+
+use std::fs::File;
+use std::fs::OpenOptions;
+use std::io::{BufRead, BufReader, Write};
 
 // This function returns the base value for a given string representation of the base.
 // If the base is not supported, it returns an error.
@@ -10,6 +15,27 @@ fn get_base_value(base: &str) -> Result<usize, &'static str> {
         "octal" => Ok(8),
         "decimal" => Ok(10),
         _ => Err("Unsupported base"),
+    }
+}
+
+// Add a new struct to represent a conversion
+#[derive(Debug, Deserialize, Serialize)]
+#[allow(dead_code)]
+pub struct Conversion {
+    from_base: String,
+    to_base: String,
+    original_number: String,
+    converted_number: String,
+}
+
+// Add a new vector to store the conversion history
+pub static mut CONVERSION_HISTORY: Vec<Conversion> = Vec::new();
+
+pub fn print_conversion_history() {
+    unsafe {
+        for conversion in &CONVERSION_HISTORY {
+            println!("{:?}", conversion);
+        }
     }
 }
 
@@ -57,6 +83,49 @@ pub fn convert(
             println!("Unsupported base: {}", base_convert_to);
         }
     }
+
+    let conversion = Conversion {
+        from_base: base_convert_from.to_string(),
+        to_base: base_convert_to.to_string(),
+        original_number: number_str.to_string(),
+        converted_number: number.val.to_string(),
+    };
+
+    unsafe {
+        CONVERSION_HISTORY.push(conversion);
+    }
+
+    // Write the conversion history to a file
+    // Write the conversion history to a file
+    let mut file = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .create(true)
+        .open("conversion_history.txt")?;
+
+    unsafe {
+        let last_conversion = CONVERSION_HISTORY.last().unwrap();
+        let json = serde_json::to_string(last_conversion)?;
+        writeln!(file, "{}", json)?;
+    }
+    load_conversion_history()?;
+
+    Ok(())
+}
+
+pub fn load_conversion_history() -> Result<(), Box<dyn std::error::Error>> {
+    let file = File::open("./conversion_history.txt")?;
+    let reader = BufReader::new(file);
+
+    for line in reader.lines() {
+        let line = line?;
+        let conversion: Conversion = serde_json::from_str(&line)?;
+        unsafe {
+            CONVERSION_HISTORY.push(conversion);
+        }
+    }
+
+    print_conversion_history();
 
     Ok(())
 }
